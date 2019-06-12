@@ -9,6 +9,9 @@ services:
       - "8400:8400"
       - "8500:8500"
       - "8600:53/udp"
+    environment:
+      VIRTUAL_HOST: infrastructure.helixalpha.com
+      VIRTUAL_PORT: 8500
 
   vault:
     depends_on:
@@ -19,6 +22,8 @@ services:
       - "consul:consul"
     environment:
       VAULT_ADDR: http://127.0.0.1:8200
+      VIRTUAL_HOST: vault.infrastructure.helixalpha.com
+      VIRTUAL_PORT: 8200
     ports:
       - "8200:8200"
     volumes:
@@ -26,3 +31,35 @@ services:
       - ./config/vault:/config:z
       - ./config/vault/policies:/policies:z
     entrypoint: /wait-for-it.sh -t 20 -h consul -p 8500 -s -- vault server -config=/config/with-consul.hcl
+
+  nginx-proxy:
+    image: jwilder/nginx-proxy
+    container_name: nginx-proxy
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - conf:/etc/nginx/conf.d
+      - vhost:/etc/nginx/vhost.d
+      - html:/usr/share/nginx/html
+      - dhparam:/etc/nginx/dhparam
+      - certs:/etc/nginx/certs:ro
+      - /var/run/docker.sock:/tmp/docker.sock:ro
+    network_mode: bridge
+
+  letsencrypt:
+    image: jrcs/letsencrypt-nginx-proxy-companion
+    container_name: nginx-proxy-le
+    volumes_from:
+      - nginx-proxy
+    volumes:
+      - certs:/etc/nginx/certs:rw
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+    network_mode: bridge
+
+volumes:
+  conf:
+  vhost:
+  html:
+  dhparam:
+  certs:
