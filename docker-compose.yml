@@ -17,6 +17,17 @@ services:
       VIRTUAL_PORT: 8500
       LETSENCRYPT_HOST: infrastructure.helixalpha.com,consul.helixalpha.com
       LETSENCRYPT_EMAIL: admin@helixalpha.com
+      CONSUL_LOCAL_CONFIG: '{
+  "data_dir": "/consul/data",
+  "ui_dir": "/consul/ui",
+  "log_level": "INFO",
+  "client_addr": "0.0.0.0",
+  "ports": {
+    "dns": 53
+  },
+  "recursor": "8.8.8.8",
+  "disable_update_check": true
+}'
 
   vault:
     depends_on:
