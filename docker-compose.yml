@@ -4,7 +4,7 @@ services:
   consul:
     image: "consul"
     hostname: "infrastructure.helixalpha.com"
-    command: "agent -client 0.0.0.0"
+    command: "agent -net=host -bind=165.227.3.39 -client 0.0.0.0"
     ports:
       - "8400:8400"
       - "8500:8500"
