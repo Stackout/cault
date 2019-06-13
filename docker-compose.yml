@@ -3,7 +3,7 @@ services:
 
   consul:
     image: "consul"
-    hostname: "consul"
+    hostname: "infrastructure.helixalpha.com"
     command: "agent -dev -client 0.0.0.0"
     ports:
       - "8400:8400"
@@ -17,7 +17,7 @@ services:
     depends_on:
       - consul
     image: "vault"
-    hostname: "vault"
+    hostname: "vault.infrastructure.helixalpha.com"
     links:
       - "consul:consul"
     environment:
