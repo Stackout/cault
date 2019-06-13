@@ -12,7 +12,7 @@ services:
     volumes:
       - /root/consul:/consul/data
     environment:
-      VIRTUAL_HOST: infrastructure.helixalpha.com,consul
+      VIRTUAL_HOST: infrastructure.helixalpha.com,consul.helixalpha.com
       VIRTUAL_PORT: 8500
       LETSENCRYPT_HOST: infrastructure.helixalpha.com
       LETSENCRYPT_EMAIL: admin@helixalpha.com
