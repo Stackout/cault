@@ -10,8 +10,10 @@ services:
       - "8500:8500"
       - "8600:53/udp"
     environment:
-      - VIRTUAL_HOST=infrastructure.helixalpha.com
-      - VIRTUAL_PORT=8500
+      VIRTUAL_HOST: infrastructure.helixalpha.com
+      VIRTUAL_PORT: 8500
+      LETSENCRYPT_HOST: infrastructure.helixalpha.com
+      LETSENCRYPT_EMAIL: admin@helixalpha.com
 
   vault:
     depends_on:
@@ -21,9 +23,9 @@ services:
     links:
       - "consul:consul"
     environment:
-      - VAULT_ADDR=http://127.0.0.1:8200
-      - VIRTUAL_HOST=vault.infrastructure.helixalpha.com
-      - VIRTUAL_PORT=8200
+      VAULT_ADDR: http://127.0.0.1:8200
+      VIRTUAL_HOST: vault.infrastructure.helixalpha.com
+      VIRTUAL_PORT: 8200
     ports:
       - "8200:8200"
     volumes:
@@ -43,9 +45,8 @@ services:
       - vhost:/etc/nginx/vhost.d
       - html:/usr/share/nginx/html
       - dhparam:/etc/nginx/dhparam
-      - certs:/etc/nginx/certs:ro
+      - /certs:/etc/nginx/certs:ro
       - /var/run/docker.sock:/tmp/docker.sock:ro
-    network_mode: bridge
 
   letsencrypt:
     image: jrcs/letsencrypt-nginx-proxy-companion
@@ -53,13 +54,11 @@ services:
     volumes_from:
       - nginx-proxy
     volumes:
-      - certs:/etc/nginx/certs:rw
+      - /certs:/etc/nginx/certs:rw
       - /var/run/docker.sock:/var/run/docker.sock:ro
-    network_mode: bridge
 
 volumes:
   conf:
   vhost:
   html:
   dhparam:
-  certs:
