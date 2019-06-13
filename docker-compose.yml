@@ -2,16 +2,16 @@ version: '2'
 services:
 
   consul:
-    image: "consul"
-    hostname: "infrastructure.helixalpha.com"
-    command: "agent -bind=165.227.3.39 -client 0.0.0.0"
-    network_mode: "host"
+    image: "bitnami/consul:1"
     ports:
-      - "8400:8400"
-      - "8500:8500"
-      - "8600:53/udp"
+      - '8300:8300'
+      - '8301:8301'
+      - '8301:8301/udp'
+      - '8500:8500'
+      - '8600:8600'
+      - '8600:8600/udp'
     volumes:
-      - /root/consul:/consul/data
+      - /root/consul:/bitnami
     environment:
       VIRTUAL_HOST: infrastructure.helixalpha.com,consul.helixalpha.com
       VIRTUAL_PORT: 8500
