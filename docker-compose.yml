@@ -4,7 +4,7 @@ services:
   consul:
     image: "consul"
     hostname: "infrastructure.helixalpha.com"
-    command: "agent -net=host -bind=165.227.3.39 -client 0.0.0.0"
+    command: "agent --net=host --bind=165.227.3.39 -client 0.0.0.0"
     ports:
       - "8400:8400"
       - "8500:8500"
@@ -12,7 +12,7 @@ services:
     volumes:
       - /root/consul:/consul/data
     environment:
-      VIRTUAL_HOST: infrastructure.helixalpha.com
+      VIRTUAL_HOST: infrastructure.helixalpha.com,consul
       VIRTUAL_PORT: 8500
       LETSENCRYPT_HOST: infrastructure.helixalpha.com
       LETSENCRYPT_EMAIL: admin@helixalpha.com
@@ -26,8 +26,6 @@ services:
       - "consul:consul"
     environment:
       VAULT_ADDR: http://127.0.0.1:8200
-      VIRTUAL_HOST: vault.infrastructure.helixalpha.com
-      VIRTUAL_PORT: 8200
     ports:
       - "8200:8200"
     volumes:
