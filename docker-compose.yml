@@ -44,8 +44,8 @@ services:
       - /etc/nginx/htpasswd:/etc/nginx/htpasswd
       - conf:/etc/nginx/conf.d
       - vhost:/etc/nginx/vhost.d
-      - html:/usr/share/nginx/html
-      - dhparam:/etc/nginx/dhparam
+      - /var/www/html:/usr/share/nginx/html
+      - /etc/nginx/dhparam:/etc/nginx/dhparam
       - /certs:/etc/nginx/certs:ro
       - /var/run/docker.sock:/tmp/docker.sock:ro
 
@@ -61,5 +61,3 @@ services:
 volumes:
   conf:
   vhost:
-  html:
-  dhparam:
