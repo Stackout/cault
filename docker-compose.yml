@@ -27,6 +27,8 @@ services:
       - "consul:consul"
     environment:
       VAULT_ADDR: http://127.0.0.1:8200
+      VIRTUAL_HOST: vault.helixalpha.com
+      VIRTUAL_PORT: 8200
     ports:
       - "8200:8200"
     volumes:
