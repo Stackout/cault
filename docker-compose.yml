@@ -4,11 +4,13 @@ services:
   consul:
     image: "consul"
     hostname: "infrastructure.helixalpha.com"
-    command: "agent -dev -client 0.0.0.0"
+    command: "agent -client 0.0.0.0"
     ports:
       - "8400:8400"
       - "8500:8500"
       - "8600:53/udp"
+    volumes:
+      - /root/consul:/consul/data
     environment:
       VIRTUAL_HOST: infrastructure.helixalpha.com
       VIRTUAL_PORT: 8500
@@ -32,6 +34,7 @@ services:
       - ./tools/wait-for-it.sh:/wait-for-it.sh:z
       - ./config/vault:/config:z
       - ./config/vault/policies:/policies:z
+      - /root/vault:/vault
     entrypoint: /wait-for-it.sh -t 20 -h consul -p 8500 -s -- vault server -config=/config/with-consul.hcl
 
   nginx-proxy:
