@@ -41,6 +41,7 @@ services:
       - "80:80"
       - "443:443"
     volumes:
+      - /etc/nginx/htpasswd:/etc/nginx/htpasswd
       - conf:/etc/nginx/conf.d
       - vhost:/etc/nginx/vhost.d
       - html:/usr/share/nginx/html
