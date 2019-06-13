@@ -14,7 +14,7 @@ services:
     environment:
       VIRTUAL_HOST: infrastructure.helixalpha.com,consul.helixalpha.com
       VIRTUAL_PORT: 8500
-      LETSENCRYPT_HOST: infrastructure.helixalpha.com
+      LETSENCRYPT_HOST: infrastructure.helixalpha.com,consul.helixalpha.com
       LETSENCRYPT_EMAIL: admin@helixalpha.com
 
   vault:
