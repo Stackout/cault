@@ -12,7 +12,7 @@ services:
       - '8600:8600/udp'
     volumes:
       - /root/consul:/bitnami
-      - /root/consul/data:/opt/bitnami/consul/conf
+      - /root/consul/consul/config:/opt/bitnami/consul/conf
     environment:
       VIRTUAL_HOST: infrastructure.helixalpha.com,consul.helixalpha.com
       VIRTUAL_PORT: 8500
